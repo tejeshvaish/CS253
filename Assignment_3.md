@@ -1,7 +1,8 @@
-#CS253A Assignment 3
-##Question:
-###CS253 Assignment-3: Test-suite Reduction
-#Objective
+ Test-suite Reduction
+
+
+
+
 Given a program, your first task is to create a test-suite by randomly generating n test-cases. Now given this test-suite, you are supposed to construct a reduced test-suite by selecting a subset of k test cases such that the branch-coverage of the program in the reduced test-suite stays as close as possible to the original test-suite. Hence, the goal is to reduce the cost of testing (size of a test-suite) while maintaining the quality (branch coverage). The steps you have to implement are as follows:
 
 (1) Write a script named generate that takes as input a program P, a size n and generates a test-suite T containing n randomly generated test cases on this program.
