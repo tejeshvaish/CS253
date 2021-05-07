@@ -1,0 +1,363 @@
+
+For 307, this is the output when I run the main_script, which does a distributed attack on the vulnerable script.  
+=========================================================================================================================
+tejesh@S[8:27:02]:~/Documents/CS253/A4$ ls
+a.java		      CWE_798.c       Output_terminal.txt  sample2.txt	sample6.txt  script_1.sh  script_5.sh  vulnerable.py
+a.out		      genrate_pwd.py  pwd.txt		   sample3.txt	sample7.txt  script_2.sh  script_6.sh  warning.txt
+code_injection.sh     main_script.sh  sample0.txt	   sample4.txt	sample8.txt  script_3.sh  script_7.sh
+cracked_password.txt  mitigated.py    sample1.txt	   sample5.txt	script_0.sh  script_4.sh  script_8.sh
+tejesh@S[8:28:18]:~/Documents/CS253/A4$ bash main_script.sh
+tejesh@S[8:28:20]:~/Documents/CS253/A4$ wrong password, try after 2 seconds
+wrong password, try after 2 seconds
+wrong password, try after 2 seconds
+wrong password, try after 2 seconds					<-------- Runing 8 scripts simultanesouly to exploit 307 vulnerability.
+wrong password, try after 2 seconds
+wrong password, try after 2 seconds
+wrong password, try after 2 seconds
+wrong password, try after 2 seconds
+wrong password, try after 2 seconds
+tejesh@S[8:28:24]:~/Documents/CS253/A4$ wrong password, try after 2 seconds
+wrong password, try after 2 seconds
+wrong password, try after 2 seconds
+wrong password, try after 2 seconds
+wrong password, try after 2 seconds
+wrong password, try after 2 seconds
+wrong password, try after 2 seconds
+wrong password, try after 2 seconds
+wrong password, try after 2 seconds
+.
+.
+.
+tejesh@S[8:30:01]:~/Documents/CS253/A4$ Welcome! Please enter your name Hello Mr,128
+Traceback (most recent call last):
+  File "vulnerable.py", line 16, in <module>
+    name = input()
+EOFError: EOF when reading a line
+tejesh@S[8:30:03]:~/Documents/CS253/A4$ Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='utf-8'>
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='utf-8'>
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='utf-8'>
+BrokenPipeError: [Errno 32] Broken pipe
+BrokenPipeError: [Errno 32] Broken pipe
+BrokenPipeError: [Errno 32] Broken pipe
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='utf-8'>
+BrokenPipeError: [Errno 32] Broken pipe
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='utf-8'>
+BrokenPipeError: [Errno 32] Broken pipe
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='utf-8'>
+BrokenPipeError: [Errno 32] Broken pipe
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='utf-8'>
+BrokenPipeError: [Errno 32] Broken pipe
+Exception ignored in: <_io.TextIOWrapper name='<stdout>' mode='w' encoding='utf-8'>
+BrokenPipeError: [Errno 32] Broken pipe
+
+========================================================================================================================
+
+After this, I know that password is 127, so now I will run the script to exploit the cwe-79.
+
+I pass the password as the argument so that I may directly access the 2nd stage of vulnerability.
+========================================================================================================================
+tejesh@S[8:34:03]:~/Documents/CS253/A4$ python3 vulnerable.py 127
+Welcome! Please enter your name
+
+Tejesh 
+Hello Mr,Tejesh
+========================================================================================================================
+This was the normal output. 
+
+But, when I give the malicious code.
+
+========================================================================================================================
+tejesh@S[8:36:17]:~/Documents/CS253/A4$ python3 vulnerable.py 127
+Welcome! Please enter your name
+
+Tejesh ; ls -l  				<-------------- Code Injection 
+Hello Mr,Tejesh
+total 132
+-rw-rw-r-- 1 tejesh tejesh   347 Mar 22 20:13 a.java
+-rwxrwxr-x 1 tejesh tejesh 16840 Mar 22 19:20 a.out
+-rw-rw-r-- 1 tejesh tejesh   138 Mar 22 14:59 code_injection.sh
+-rw-rw-r-- 1 tejesh tejesh     4 Mar 22 20:30 cracked_password.txt
+-rw-rw-r-- 1 tejesh tejesh   572 Mar 22 20:24 CWE_798.c
+-rw-rw-r-- 1 tejesh tejesh   263 Mar 22 14:53 genrate_pwd.py
+-rw-rw-r-- 1 tejesh tejesh    98 Mar 22 15:56 main_script.sh
+-rw-rw-r-- 1 tejesh tejesh  1294 Mar 22 20:22 mitigated.py
+-rw-rw-r-- 1 tejesh tejesh  1181 Mar 22 19:58 Output_terminal.txt
+-rw-rw-r-- 1 tejesh tejesh     4 Mar 22 20:25 pwd.txt
+-rw-rw-r-- 1 tejesh tejesh   324 Mar 22 14:53 sample0.txt
+-rw-rw-r-- 1 tejesh tejesh   324 Mar 22 14:53 sample1.txt
+-rw-rw-r-- 1 tejesh tejesh   324 Mar 22 14:53 sample2.txt
+-rw-rw-r-- 1 tejesh tejesh   324 Mar 22 14:53 sample3.txt
+-rw-rw-r-- 1 tejesh tejesh   324 Mar 22 14:53 sample4.txt
+-rw-rw-r-- 1 tejesh tejesh   324 Mar 22 14:53 sample5.txt
+-rw-rw-r-- 1 tejesh tejesh   324 Mar 22 14:53 sample6.txt
+-rw-rw-r-- 1 tejesh tejesh   324 Mar 22 14:53 sample7.txt
+-rw-rw-r-- 1 tejesh tejesh   324 Mar 22 14:53 sample8.txt
+-rw-rw-r-- 1 tejesh tejesh   418 Mar 22 16:04 script_0.sh
+-rw-rw-r-- 1 tejesh tejesh   395 Mar 22 16:03 script_1.sh
+-rw-rw-r-- 1 tejesh tejesh   378 Mar 22 16:03 script_2.sh
+-rw-rw-r-- 1 tejesh tejesh   378 Mar 22 16:03 script_3.sh
+-rw-rw-r-- 1 tejesh tejesh   383 Mar 22 16:03 script_4.sh
+-rw-rw-r-- 1 tejesh tejesh   382 Mar 22 16:04 script_5.sh
+-rw-rw-r-- 1 tejesh tejesh   382 Mar 22 16:04 script_6.sh
+-rw-rw-r-- 1 tejesh tejesh   382 Mar 22 16:04 script_7.sh
+-rw-rw-r-- 1 tejesh tejesh   382 Mar 22 16:04 script_8.sh
+-rw-rw-r-- 1 tejesh tejesh   537 Mar 22 16:06 vulnerable.py
+-rw-rw-r-- 1 tejesh tejesh     0 Mar 22 11:07 warning.txt
+========================================================================================================================
+
+This is the exploitation of code injection and input being not validated. So, A attacker can do malicious things and can even
+Extract user data by injecting code like this into the query or program. 
+
+
+
+
+
+
+
+
+
+This is the output after String command prints all the printable characters in the byte code of the Authentication program, named CWE-798.C
+It determines some text and contents from that binary files. Which basically exposes the hard-coded Password. 
+
+========================================================================================================================
+tejesh@S[8:40:31]:~/Documents/CS253/A4$ gcc CWE_798.c
+tejesh@S[8:40:32]:~/Documents/CS253/A4$ ls
+a.java		      CWE_798.c       Output_terminal.txt  sample2.txt	sample6.txt  script_1.sh  script_5.sh  vulnerable.py
+a.out		      genrate_pwd.py  pwd.txt		   sample3.txt	sample7.txt  script_2.sh  script_6.sh  warning.txt
+code_injection.sh     main_script.sh  sample0.txt	   sample4.txt	sample8.txt  script_3.sh  script_7.sh
+cracked_password.txt  mitigated.py    sample1.txt	   sample5.txt	script_0.sh  script_4.sh  script_8.sh
+tejesh@S[8:40:46]:~/Documents/CS253/A4$ strings a.out                      
+
+
+/lib64/ld-linux-x86-64.so.2
+libc.so.6
+strncmp
+__isoc99_scanf
+__stack_chk_fail
+printf
+__cxa_finalize
+__libc_start_main
+GLIBC_2.7
+GLIBC_2.4
+GLIBC_2.2.5
+_ITM_deregisterTMCloneTable
+__gmon_start__
+_ITM_registerTMCloneTable
+u+UH
+HOHOf                 		<----------------------------------- Hard-Coded-password---------------------------------------------
+[]A\A]A^A_
+Welcome ROOT
+wrong password
+:*3$"
+GCC: (Ubuntu 9.3.0-17ubuntu1~20.04) 9.3.0
+crtstuff.c
+deregister_tm_clones
+__do_global_dtors_aux
+completed.8060
+__do_global_dtors_aux_fini_array_entry
+frame_dummy
+__frame_dummy_init_array_entry
+__FRAME_END__
+__init_array_end
+_DYNAMIC
+__init_array_start
+__GNU_EH_FRAME_HDR
+_GLOBAL_OFFSET_TABLE_
+__libc_csu_fini
+strncmp@@GLIBC_2.2.5
+_ITM_deregisterTMCloneTable
+_edata
+__stack_chk_fail@@GLIBC_2.4
+printf@@GLIBC_2.2.5
+__libc_start_main@@GLIBC_2.2.5
+__data_start
+__gmon_start__
+__dso_handle
+_IO_stdin_used
+__libc_csu_init
+__bss_start
+main
+__isoc99_scanf@@GLIBC_2.7
+__TMC_END__
+_ITM_registerTMCloneTable
+__cxa_finalize@@GLIBC_2.2.5
+.symtab
+.strtab
+.shstrtab
+.interp
+.note.gnu.property
+.note.gnu.build-id
+.note.ABI-tag
+.gnu.hash
+.dynsym
+.dynstr
+.gnu.version
+.gnu.version_r
+.rela.dyn
+.rela.plt
+.init
+.plt.got
+.plt.sec
+.text
+.fini
+.rodata
+.eh_frame_hdr
+.eh_frame
+.init_array
+.fini_array
+.dynamic
+.data
+.bss
+.comment
+=========================================================================END==================================================================
+
+
+
+
+Terminal output of mitigated program:
+
+
+=====================================================================================================================
+cwe-307
+
+tejesh@S[9:25:32]:~/Documents/CS253/A4$ bash script_mitigated_test.sh 
+sample0.txt
+1\n
+2\n
+3\n
+4\n
+5\n
+5\n
+was here
+zsh: terminated  bash script_mitigated_test.sh
+=====================================================================================================================
+cwe-79
+
+tejesh@S[9:28:17]:~/Documents/CS253/A4$ echo "0" > counter.txt
+tejesh@S[9:28:18]:~/Documents/CS253/A4$ python3 mitigated.py 127 
+Welcome! Please enter your First name
+
+Tejesh | ls -l
+
+=====================================================================================================================
+Outputs nothing, because, input is not valid 
+
+
+In case of valid input :-
+
+tejesh@S[9:29:44]:~/Documents/CS253/A4$ python3 mitigated.py 127 
+Welcome! Please enter your First name
+
+Tejesh
+Nice Name
+Hello Mr,Tejesh
+=====================================================================================================================
+Cwe-798 : changed the hard-coded password to be read from a file. --> happens in databases with encryption in real life. 
+Now, it not directly visible through strings. 
+
+tejesh@S[9:39:39]:~/Documents/CS253/A4$ gcc mitigated_798.c 
+tejesh@S[9:39:42]:~/Documents/CS253/A4$ ls
+a.java		      CWE_798.c        Output_terminal.txt  sample3.txt  sample8.txt  script_4.sh  script_mitigated_test.sh
+a.out		      genrate_pwd.py   pwd.txt		    sample4.txt  script_0.sh  script_5.sh  vulnerable.py
+code_injection.sh     main_script.sh   sample0.txt	    sample5.txt  script_1.sh  script_6.sh  warning.txt
+counter.txt	      mitigated_798.c  sample1.txt	    sample6.txt  script_2.sh  script_7.sh
+cracked_password.txt  mitigated.py     sample2.txt	    sample7.txt  script_3.sh  script_8.sh
+tejesh@S[9:39:54]:~/Documents/CS253/A4$ strings ./a.out
+/lib64/ld-linux-x86-64.so.2
+libc.so.6
+fopen
+strncmp
+__isoc99_scanf
+__stack_chk_fail
+printf
+__isoc99_fscanf
+__cxa_finalize
+__libc_start_main
+GLIBC_2.4
+GLIBC_2.7
+GLIBC_2.2.5
+_ITM_deregisterTMCloneTable
+__gmon_start__
+_ITM_registerTMCloneTable
+u+UH
+[]A\A]A^A_
+pwd.txt
+Welcome ROOT
+wrong password
+:*3$"
+GCC: (Ubuntu 9.3.0-17ubuntu1~20.04) 9.3.0
+crtstuff.c
+deregister_tm_clones
+__do_global_dtors_aux
+completed.8060
+__do_global_dtors_aux_fini_array_entry
+frame_dummy
+__frame_dummy_init_array_entry
+mitigated_798.c
+__FRAME_END__
+__init_array_end
+_DYNAMIC
+__init_array_start
+__GNU_EH_FRAME_HDR
+_GLOBAL_OFFSET_TABLE_
+__libc_csu_fini
+strncmp@@GLIBC_2.2.5
+_ITM_deregisterTMCloneTable
+__isoc99_fscanf@@GLIBC_2.7
+_edata
+__stack_chk_fail@@GLIBC_2.4
+printf@@GLIBC_2.2.5
+__libc_start_main@@GLIBC_2.2.5
+__data_start
+__gmon_start__
+__dso_handle
+_IO_stdin_used
+__libc_csu_init
+__bss_start
+main
+fopen@@GLIBC_2.2.5
+__isoc99_scanf@@GLIBC_2.7
+__TMC_END__
+_ITM_registerTMCloneTable
+__cxa_finalize@@GLIBC_2.2.5
+.symtab
+.strtab
+.shstrtab
+.interp
+.note.gnu.property
+.note.gnu.build-id
+.note.ABI-tag
+.gnu.hash
+.dynsym
+.dynstr
+.gnu.version
+.gnu.version_r
+.rela.dyn
+.rela.plt
+.init
+.plt.got
+.plt.sec
+.text
+.fini
+.rodata
+.eh_frame_hdr
+.eh_frame
+.init_array
+.fini_array
+.dynamic
+.data
+.bss
+.comment
+                                                                                                                                        
+nejesh@S[9:40:28]:~/Documents/CS253/A4$ ./a.out
+tejesh@S[9:40:38]:~/Documents/CS253/A4$ ./a.out 127
+127
+Welcome ROOT%                                  
+tejesh@S[9:40:59]:~/Documents/CS253/A4$ ./a.out    
+111
+wrong password%   
+
+
+=====================================================================================================================
+
+
